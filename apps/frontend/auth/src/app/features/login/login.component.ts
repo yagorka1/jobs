@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -8,9 +9,15 @@ import { environment } from '../../../environments/environment';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private readonly document = inject(DOCUMENT);
+
   readonly googleAuthUrl = `${environment.apiUrl}/auth/google`;
 
   loginWithGoogle(): void {
-    window.location.href = this.googleAuthUrl;
+    this.navigateTo(this.googleAuthUrl);
+  }
+
+  protected navigateTo(url: string): void {
+    this.document.location.href = url;
   }
 }

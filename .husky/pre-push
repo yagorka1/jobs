@@ -1,0 +1,9 @@
+BASE=$(git rev-parse --verify origin/main >/dev/null 2>&1 && echo "origin/main" || echo "HEAD~1")
+
+echo "Running lint on affected projects (base: $BASE)..."
+NX_DAEMON=false npx nx affected --target=lint --base=$BASE --head=HEAD || exit 1
+
+echo "Running tests on affected projects (base: $BASE)..."
+NX_DAEMON=false npx nx affected --target=test --base=$BASE --head=HEAD || exit 1
+
+exit 0

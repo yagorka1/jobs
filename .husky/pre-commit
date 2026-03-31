@@ -1,0 +1,2 @@
+# Pre-commit hook is intentionally empty.
+# Lint and tests run on pre-push to keep commits fast.
