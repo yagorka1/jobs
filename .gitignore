@@ -48,5 +48,6 @@ Thumbs.db
 .nx/polygraph
 .angular
 .env
+.env.example
 
 vitest.config.*.timestamp*
