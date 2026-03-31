@@ -1,0 +1,24 @@
+@if (authService.user()) {
+  <mat-toolbar color="primary" class="navbar">
+    <div class="navbar-brand">
+      <svg class="navbar-logo" width="28" height="28" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="6" fill="rgba(255,255,255,0.2)"/>
+        <path d="M10 13h12v10H10z" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M13 13v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" fill="none" stroke="white" stroke-width="1.5"/>
+        <line x1="10" y1="18" x2="22" y2="18" stroke="white" stroke-width="1.5"/>
+      </svg>
+      <span class="navbar-title">Job Tracker</span>
+    </div>
+
+    <span class="spacer"></span>
+
+    <span class="navbar-user">
+      <mat-icon>account_circle</mat-icon>
+      {{ authService.user()!.name }}
+    </span>
+    <button mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-toolbar>
+}

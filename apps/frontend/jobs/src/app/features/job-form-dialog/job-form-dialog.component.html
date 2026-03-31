@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Job' : 'Add Job' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="job-form">
+    @if (serverError()) {
+      <div class="server-error">
+        <span>{{ serverError() }}</span>
+      </div>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Company</mat-label>
+      <input matInput formControlName="company" placeholder="e.g. Google" />
+      @if (form.get('company')?.hasError('required')) {
+        <mat-error>Company is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Position</mat-label>
+      <input matInput formControlName="position" placeholder="e.g. Frontend Developer" />
+      @if (form.get('position')?.hasError('required')) {
+        <mat-error>Position is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        @for (opt of statusOptions; track opt.value) {
+          <mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Applied At</mat-label>
+      <input matInput type="date" formControlName="appliedAt" />
+      @if (form.get('appliedAt')?.hasError('required')) {
+        <mat-error>Date is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Link</mat-label>
+      <input matInput formControlName="link" placeholder="https://..." />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3" placeholder="Any notes..."></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [disabled]="loading()" (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" [disabled]="form.invalid || loading()" (click)="submit()">
+    @if (loading()) {
+      <mat-spinner diameter="18"></mat-spinner>
+    } @else {
+      {{ isEdit ? 'Save' : 'Add' }}
+    }
+  </button>
+</mat-dialog-actions>

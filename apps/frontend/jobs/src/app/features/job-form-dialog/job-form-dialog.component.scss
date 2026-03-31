@@ -1,0 +1,26 @@
+.job-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 460px;
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.server-error {
+  background: #fce4ec;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+mat-spinner {
+  display: inline-block;
+}

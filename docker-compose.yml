@@ -1,0 +1,61 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: jobtracker-db
+    environment:
+      POSTGRES_USER: jobtracker
+      POSTGRES_PASSWORD: jobtracker
+      POSTGRES_DB: jobtracker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: jobtracker-api
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: postgresql://jobtracker:jobtracker@postgres:5432/jobtracker
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_URL: http://localhost:4200
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  shell:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.shell
+    container_name: jobtracker-shell
+    ports:
+      - '4200:80'
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  auth:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.auth
+    container_name: jobtracker-auth
+    ports:
+      - '4201:80'
+    restart: unless-stopped
+
+  jobs:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jobs
+    container_name: jobtracker-jobs
+    ports:
+      - '4202:80'
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
