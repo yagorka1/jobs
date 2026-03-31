@@ -44,13 +44,13 @@ describe('JobFormDialogComponent — Add mode', () => {
 
   it('creates in add mode with empty form', () => {
     const { component } = createComponent({});
-    expect(component.isEdit).toBe(false);
-    expect(component.form.get('company')?.value).toBe('');
+    expect(component['isEdit']).toBe(false);
+    expect(component['form'].get('company')?.value).toBe('');
   });
 
   it('submit() calls jobsService.create and closes dialog with true', () => {
     const { component, jobsService, dialogRef } = createComponent({});
-    component.form.setValue({
+    component['form'].setValue({
       company: 'Acme',
       position: 'Developer',
       status: 'applied',
@@ -59,7 +59,7 @@ describe('JobFormDialogComponent — Add mode', () => {
       notes: '',
     });
 
-    (component as unknown as { submit: () => void }).submit();
+    component['submit']();
 
     expect(jobsService.create).toHaveBeenCalledOnce();
     expect(dialogRef.close).toHaveBeenCalledWith(true);
@@ -68,7 +68,7 @@ describe('JobFormDialogComponent — Add mode', () => {
   it('submit() does nothing when form is invalid', () => {
     const { component, jobsService } = createComponent({});
 
-    (component as unknown as { submit: () => void }).submit();
+    component['submit']();
 
     expect(jobsService.create).not.toHaveBeenCalled();
   });
@@ -77,7 +77,7 @@ describe('JobFormDialogComponent — Add mode', () => {
     const error = new HttpErrorResponse({ error: { message: 'Server error' }, status: 500, statusText: 'Error' });
     const { component } = createComponent({}, { create: vi.fn().mockReturnValue(throwError(() => error)) });
 
-    component.form.setValue({
+    component['form'].setValue({
       company: 'Acme',
       position: 'Developer',
       status: 'applied',
@@ -85,15 +85,15 @@ describe('JobFormDialogComponent — Add mode', () => {
       link: '',
       notes: '',
     });
-    (component as unknown as { submit: () => void }).submit();
+    component['submit']();
 
-    expect(component.serverError()).toBe('Server error');
-    expect(component.loading()).toBe(false);
+    expect(component['serverError']()).toBe('Server error');
+    expect(component['loading']()).toBe(false);
   });
 
   it('cancel() closes dialog without value', () => {
     const { component, dialogRef } = createComponent({});
-    (component as unknown as { cancel: () => void }).cancel();
+    component['cancel']();
     expect(dialogRef.close).toHaveBeenCalledWith();
   });
 });
@@ -103,15 +103,15 @@ describe('JobFormDialogComponent — Edit mode', () => {
 
   it('creates in edit mode with pre-filled form', () => {
     const { component } = createComponent({ job: mockJob });
-    expect(component.isEdit).toBe(true);
-    expect(component.form.get('company')?.value).toBe('Acme');
-    expect(component.form.get('position')?.value).toBe('Developer');
+    expect(component['isEdit']).toBe(true);
+    expect(component['form'].get('company')?.value).toBe('Acme');
+    expect(component['form'].get('position')?.value).toBe('Developer');
   });
 
   it('submit() calls jobsService.update with job id', () => {
     const { component, jobsService, dialogRef } = createComponent({ job: mockJob });
 
-    (component as unknown as { submit: () => void }).submit();
+    component['submit']();
 
     expect(jobsService.update).toHaveBeenCalledWith('j1', expect.any(Object), expect.any(Object));
     expect(dialogRef.close).toHaveBeenCalledWith(true);
