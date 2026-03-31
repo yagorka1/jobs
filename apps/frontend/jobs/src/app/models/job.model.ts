@@ -21,4 +21,4 @@ export interface CreateJobDto {
   notes?: string;
 }
 
-export interface UpdateJobDto extends Partial<CreateJobDto> {}
+export type UpdateJobDto = Partial<CreateJobDto>;

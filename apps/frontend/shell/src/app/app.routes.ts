@@ -5,12 +5,12 @@ export const appRoutes: Route[] = [
   {
     path: 'jobs',
     canActivate: [authGuard],
-    loadChildren: () => import('jobs/Routes').then((m) => m!.remoteRoutes),
+    loadChildren: () => import('jobs/Routes').then((m) => m.remoteRoutes),
   },
   {
     path: 'login',
     canActivate: [guestGuard],
-    loadChildren: () => import('auth/Routes').then((m) => m!.remoteRoutes),
+    loadChildren: () => import('auth/Routes').then((m) => m.remoteRoutes),
   },
   {
     path: '',
