@@ -17,7 +17,7 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  googleAuth(): void {}
+  googleAuth(): void { /* handled by Passport guard */ }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))

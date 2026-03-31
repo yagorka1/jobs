@@ -67,7 +67,7 @@ export class JobFormDialogComponent implements OnInit {
 
     const value = this.form.getRawValue() as CreateJobDto;
     const request$ = this.isEdit
-      ? this.jobsService.update(this.data.job!.id, value, this.localContext)
+      ? this.jobsService.update(this.data.job?.id ?? '', value, this.localContext)
       : this.jobsService.create(value, this.localContext);
 
     request$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
