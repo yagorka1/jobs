@@ -37,7 +37,7 @@ describe('NavbarComponent', () => {
   });
 
   it('calls authService.logout() and navigates to /login on logout()', () => {
-    (component as unknown as { logout: () => void }).logout();
+    component['logout']();
 
     expect(authService.logout).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);

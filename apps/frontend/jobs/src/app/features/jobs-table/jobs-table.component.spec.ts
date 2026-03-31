@@ -72,7 +72,7 @@ describe('JobsTableComponent (integration)', () => {
     const afterClosed$ = new Subject<boolean>();
     dialog.open.mockReturnValue({ afterClosed: () => afterClosed$.asObservable() } as MatDialogRef<unknown>);
 
-    (component as unknown as { openAddDialog: () => void }).openAddDialog();
+    component['openAddDialog']();
     afterClosed$.next(true);
 
     expect(dialog.open).toHaveBeenCalledOnce();
@@ -83,7 +83,7 @@ describe('JobsTableComponent (integration)', () => {
     const afterClosed$ = new Subject<boolean>();
     dialog.open.mockReturnValue({ afterClosed: () => afterClosed$.asObservable() } as MatDialogRef<unknown>);
 
-    (component as unknown as { openAddDialog: () => void }).openAddDialog();
+    component['openAddDialog']();
     afterClosed$.next(false);
 
     expect(jobsService.getAll).toHaveBeenCalledOnce();
@@ -93,7 +93,7 @@ describe('JobsTableComponent (integration)', () => {
     const afterClosed$ = new Subject<boolean>();
     dialog.open.mockReturnValue({ afterClosed: () => afterClosed$.asObservable() } as MatDialogRef<unknown>);
 
-    (component as unknown as { openEditDialog: (job: Job) => void }).openEditDialog(mockJob);
+    component['openEditDialog'](mockJob);
     afterClosed$.complete();
 
     expect(dialog.open).toHaveBeenCalledWith(
@@ -105,7 +105,7 @@ describe('JobsTableComponent (integration)', () => {
   it('deleteJob() calls remove and reloads on confirm', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true);
 
-    (component as unknown as { deleteJob: (job: Job) => void }).deleteJob(mockJob);
+    component['deleteJob'](mockJob);
 
     expect(jobsService.remove).toHaveBeenCalledWith('j1');
     expect(jobsService.getAll).toHaveBeenCalledTimes(2);
@@ -114,7 +114,7 @@ describe('JobsTableComponent (integration)', () => {
   it('deleteJob() does nothing when confirm is cancelled', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(false);
 
-    (component as unknown as { deleteJob: (job: Job) => void }).deleteJob(mockJob);
+    component['deleteJob'](mockJob);
 
     expect(jobsService.remove).not.toHaveBeenCalled();
   });
