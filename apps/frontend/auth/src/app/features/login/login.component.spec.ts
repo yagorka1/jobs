@@ -24,14 +24,11 @@ describe('LoginComponent', () => {
     expect(component.googleAuthUrl).toMatch(/\/auth\/google$/);
   });
 
-  it('loginWithGoogle() sets window.location.href to googleAuthUrl', () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    delete (window as any).location;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).location = { href: '' };
+  it('loginWithGoogle() navigates to googleAuthUrl', () => {
+    const navigateSpy = vi.spyOn(component, 'navigateTo');
 
     component.loginWithGoogle();
 
-    expect(window.location.href).toBe(component.googleAuthUrl);
+    expect(navigateSpy).toHaveBeenCalledWith(component.googleAuthUrl);
   });
 });
