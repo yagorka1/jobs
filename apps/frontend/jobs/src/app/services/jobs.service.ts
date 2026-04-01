@@ -8,7 +8,7 @@ const API_URL = environment.apiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class JobsService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
 
   public getAll(): Observable<Job[]> {
     return this.http.get<Job[]>(`${API_URL}/jobs`, { withCredentials: true });

@@ -13,10 +13,10 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  private readonly router = inject(Router);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly router: Router = inject(Router);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  protected readonly authService = inject(AuthService);
+  protected readonly authService: AuthService = inject(AuthService);
 
   protected logout(): void {
     this.authService

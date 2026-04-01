@@ -10,20 +10,20 @@ import { JobsService } from './jobs.service';
 @Controller('jobs')
 @UseGuards(JwtAuthGuard)
 export class JobsController {
-  constructor(private readonly jobsService: JobsService) {}
+  public constructor(private readonly jobsService: JobsService) {}
 
   @Get()
-  findAll(@CurrentUser() user: AuthenticatedUser): Promise<Job[]> {
+  public findAll(@CurrentUser() user: AuthenticatedUser): Promise<Job[]> {
     return this.jobsService.findAll(user.id);
   }
 
   @Post()
-  create(@CurrentUser() user: AuthenticatedUser, @Body() dto: CreateJobDto): Promise<Job> {
+  public create(@CurrentUser() user: AuthenticatedUser, @Body() dto: CreateJobDto): Promise<Job> {
     return this.jobsService.create(user.id, dto);
   }
 
   @Patch(':id')
-  update(
+  public update(
     @CurrentUser() user: AuthenticatedUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateJobDto,
@@ -32,7 +32,7 @@ export class JobsController {
   }
 
   @Delete(':id')
-  remove(
+  public remove(
     @CurrentUser() user: AuthenticatedUser,
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<void> {

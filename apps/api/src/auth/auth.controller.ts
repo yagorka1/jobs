@@ -10,18 +10,18 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
+  public constructor(
     private readonly authService: AuthService,
     private readonly config: ConfigService,
   ) {}
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
-  googleAuth(): void { /* handled by Passport guard */ }
+  public googleAuth(): void { /* handled by Passport guard */ }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  googleCallback(@CurrentUser() user: User, @Res() res: Response): void {
+  public googleCallback(@CurrentUser() user: User, @Res() res: Response): void {
     const token = this.authService.generateToken(user);
     res.cookie('access_token', token, {
       httpOnly: true,
@@ -33,12 +33,12 @@ export class AuthController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  me(@CurrentUser() user: AuthenticatedUser): AuthenticatedUser {
+  public me(@CurrentUser() user: AuthenticatedUser): AuthenticatedUser {
     return user;
   }
 
   @Post('logout')
-  logout(@Res() res: Response): void {
+  public logout(@Res() res: Response): void {
     res.clearCookie('access_token');
     res.json({ ok: true });
   }

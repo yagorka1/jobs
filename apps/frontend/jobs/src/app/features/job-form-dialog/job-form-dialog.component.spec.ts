@@ -17,7 +17,7 @@ const mockJob: Job = {
   userId: 'u1',
 };
 
-function createComponent(dialogData: object, jobsServiceOverrides: object = {}) {
+function createComponent(dialogData: object, jobsServiceOverrides: object = {}): { fixture: ReturnType<typeof TestBed.createComponent<JobFormDialogComponent>>; component: JobFormDialogComponent; jobsService: { create: ReturnType<typeof vi.fn>; update: ReturnType<typeof vi.fn> }; dialogRef: { close: ReturnType<typeof vi.fn> } } {
   const jobsService = {
     create: vi.fn().mockReturnValue(of(mockJob)),
     update: vi.fn().mockReturnValue(of(mockJob)),

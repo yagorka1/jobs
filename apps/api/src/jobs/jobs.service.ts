@@ -7,22 +7,22 @@ import { Job } from './job.entity';
 
 @Injectable()
 export class JobsService {
-  constructor(@InjectRepository(Job) private readonly repo: Repository<Job>) {}
+  public constructor(@InjectRepository(Job) private readonly repo: Repository<Job>) {}
 
-  findAll(userId: string): Promise<Job[]> {
+  public findAll(userId: string): Promise<Job[]> {
     return this.repo.find({ where: { userId }, order: { createdAt: 'DESC' } });
   }
 
-  create(userId: string, dto: CreateJobDto): Promise<Job> {
+  public create(userId: string, dto: CreateJobDto): Promise<Job> {
     return this.repo.save(this.repo.create({ ...dto, userId }));
   }
 
-  async update(id: string, userId: string, dto: UpdateJobDto): Promise<Job> {
+  public async update(id: string, userId: string, dto: UpdateJobDto): Promise<Job> {
     const job = await this.findOneOrFail(id, userId);
     return this.repo.save({ ...job, ...dto });
   }
 
-  async remove(id: string, userId: string): Promise<void> {
+  public async remove(id: string, userId: string): Promise<void> {
     const job = await this.findOneOrFail(id, userId);
     await this.repo.remove(job);
   }
