@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, WritableSignal, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpContext, HttpErrorResponse } from '@angular/common/http';
 import { CreateJobDto } from '../../models/job.model';
 import { JobFormDialogData } from '../../models/job-form-dialog.model';
-import { JOB_STATUS_OPTIONS } from '../../constants/job-status.constants';
+import { JOB_STATUS_OPTIONS, JobStatusOption } from '../../constants/job-status.constants';
 import { HANDLE_ERROR_LOCALLY } from '../../constants/http-context.constants';
 import { JobsService } from '../../services/jobs.service';
 import { extractError } from '../../utils/extract-error.util';
@@ -30,17 +30,17 @@ import { extractError } from '../../utils/extract-error.util';
   styleUrl: './job-form-dialog.component.scss',
 })
 export class JobFormDialogComponent implements OnInit {
-  private readonly fb = inject(FormBuilder);
-  private readonly dialogRef = inject(MatDialogRef<JobFormDialogComponent>);
-  private readonly jobsService = inject(JobsService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly localContext = new HttpContext().set(HANDLE_ERROR_LOCALLY, true);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly dialogRef: MatDialogRef<JobFormDialogComponent> = inject(MatDialogRef<JobFormDialogComponent>);
+  private readonly jobsService: JobsService = inject(JobsService);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly localContext: HttpContext = new HttpContext().set(HANDLE_ERROR_LOCALLY, true);
 
   protected readonly data: JobFormDialogData = inject(MAT_DIALOG_DATA);
-  protected readonly statusOptions = JOB_STATUS_OPTIONS;
-  protected readonly isEdit = !!this.data?.job;
-  protected readonly loading = signal(false);
-  protected readonly serverError = signal<string | null>(null);
+  protected readonly statusOptions: JobStatusOption[] = JOB_STATUS_OPTIONS;
+  protected readonly isEdit: boolean = !!this.data?.job;
+  protected readonly loading: WritableSignal<boolean> = signal(false);
+  protected readonly serverError: WritableSignal<string | null> = signal<string | null>(null);
   protected form!: FormGroup;
 
   public ngOnInit(): void {

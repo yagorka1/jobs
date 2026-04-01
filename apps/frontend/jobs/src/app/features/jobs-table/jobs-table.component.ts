@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, WritableSignal, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,12 +26,12 @@ import { JobFormDialogComponent } from '../job-form-dialog/job-form-dialog.compo
   styleUrl: './jobs-table.component.scss',
 })
 export class JobsTableComponent implements OnInit {
-  private readonly jobsService = inject(JobsService);
-  private readonly dialog = inject(MatDialog);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly jobsService: JobsService = inject(JobsService);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  protected readonly jobs = signal<Job[]>([]);
-  protected readonly displayedColumns = ['company', 'position', 'status', 'appliedAt', 'link', 'actions'];
+  protected readonly jobs: WritableSignal<Job[]> = signal<Job[]>([]);
+  protected readonly displayedColumns: string[] = ['company', 'position', 'status', 'appliedAt', 'link', 'actions'];
 
   public ngOnInit(): void {
     this.loadJobs();
@@ -59,6 +59,7 @@ export class JobsTableComponent implements OnInit {
 
   protected deleteJob(job: Job): void {
     if (!confirm(`Delete "${job.position}" at ${job.company}?`)) return;
+
     this.jobsService
       .remove(job.id)
       .pipe(takeUntilDestroyed(this.destroyRef))

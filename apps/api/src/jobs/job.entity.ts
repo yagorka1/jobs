@@ -11,33 +11,33 @@ export enum JobStatus {
 @Entity('jobs')
 export class Job {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id: string;
 
   @Column()
-  company: string;
+  public company: string;
 
   @Column()
-  position: string;
+  public position: string;
 
   @Column({ type: 'enum', enum: JobStatus, default: JobStatus.APPLIED })
-  status: JobStatus;
+  public status: JobStatus;
 
   @Column({ name: 'applied_at', type: 'date' })
-  appliedAt: string;
+  public appliedAt: string;
 
   @Column({ nullable: true })
-  link: string;
+  public link: string;
 
   @Column({ type: 'text', nullable: true })
-  notes: string;
+  public notes: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  public createdAt: Date;
 
   @Column({ name: 'user_id' })
-  userId: string;
+  public userId: string;
 
   @ManyToOne(() => User, (user) => user.jobs)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  public user: User;
 }

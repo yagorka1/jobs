@@ -11,17 +11,17 @@ export interface CreateUserData {
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private readonly repo: Repository<User>) {}
+  public constructor(@InjectRepository(User) private readonly repo: Repository<User>) {}
 
-  findById(id: string): Promise<User | null> {
+  public findById(id: string): Promise<User | null> {
     return this.repo.findOneBy({ id });
   }
 
-  findByGoogleId(googleId: string): Promise<User | null> {
+  public findByGoogleId(googleId: string): Promise<User | null> {
     return this.repo.findOneBy({ googleId });
   }
 
-  create(data: CreateUserData): Promise<User> {
+  public create(data: CreateUserData): Promise<User> {
     return this.repo.save(this.repo.create(data));
   }
 }

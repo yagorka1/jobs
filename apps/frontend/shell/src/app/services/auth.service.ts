@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, Signal, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, of, map } from 'rxjs';
 import { AuthUser } from '../models/auth-user.model';
@@ -8,9 +8,9 @@ const API_URL = environment.apiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  private readonly http: HttpClient = inject(HttpClient);
 
-  public readonly user = signal<AuthUser | null>(null);
+  public readonly user: Signal<AuthUser | null> = signal<AuthUser | null>(null);
 
   public checkAuth(): Observable<boolean> {
     return this.http

@@ -4,20 +4,20 @@ import { Job } from '../jobs/job.entity';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  public id: string;
 
   @Column({ unique: true })
-  email: string;
+  public email: string;
 
   @Column()
-  name: string;
+  public name: string;
 
   @Column({ name: 'google_id', unique: true })
-  googleId: string;
+  public googleId: string;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  public createdAt: Date;
 
   @OneToMany(() => Job, (job) => job.user)
-  jobs: Job[];
+  public jobs: Job[];
 }

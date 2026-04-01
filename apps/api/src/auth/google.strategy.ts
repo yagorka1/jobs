@@ -6,7 +6,7 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(config: ConfigService, private usersService: UsersService) {
+  public constructor(config: ConfigService, private usersService: UsersService) {
     super({
       clientID: config.get('GOOGLE_CLIENT_ID'),
       clientSecret: config.get('GOOGLE_CLIENT_SECRET'),
@@ -15,7 +15,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
   }
 
-  async validate(_accessToken: string, _refreshToken: string, profile: Profile, done: VerifyCallback) {
+  public async validate(_accessToken: string, _refreshToken: string, profile: Profile, done: VerifyCallback): Promise<void> {
     const { id, displayName, emails } = profile;
     let user = await this.usersService.findByGoogleId(id);
     if (!user) {

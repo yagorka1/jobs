@@ -3,23 +3,23 @@ import { JobStatus } from '../job.entity';
 
 export class CreateJobDto {
   @IsString()
-  company: string;
+  public company: string;
 
   @IsString()
-  position: string;
+  public position: string;
 
   @IsEnum(JobStatus)
   @IsOptional()
-  status?: JobStatus;
+  public status?: JobStatus;
 
   @IsDateString()
-  appliedAt: string;
+  public appliedAt: string;
 
   @IsUrl()
   @IsOptional()
-  link?: string;
+  public link?: string;
 
   @IsString()
   @IsOptional()
-  notes?: string;
+  public notes?: string;
 }
