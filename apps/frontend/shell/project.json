@@ -91,7 +91,8 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "coverage/apps/frontend/shell"
+        "reportsDirectory": "coverage/apps/frontend/shell",
+        "watch": false
       }
     },
     "serve-static": {

@@ -92,7 +92,8 @@
       "executor": "@nx/vitest:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "coverage/apps/frontend/auth"
+        "reportsDirectory": "coverage/apps/frontend/auth",
+        "watch": false
       }
     },
     "serve-static": {
